@@ -342,7 +342,7 @@ app.get("/api/users", (request, response) => {
 });
 
 // request / pulls all inventory
-app.get("/", (request, response) => {
+app.get("/inventory", (request, response) => {
   const data = app.locals.inventory;
   if (!data) {
     response.status(404).send({
