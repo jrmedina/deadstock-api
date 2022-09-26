@@ -21,21 +21,6 @@ app.locals.users = [
 ];
 app.locals.inventory = [
   {
-    title: "Union x Air Jordan 1 Black Toe",
-    release: "11/17/2018",
-    colors: ["WHITE", "BLACK-VARSITY", "RED", "WOLF GREY"],
-    brand: "Jordan",
-    size: 9.5,
-    quantity: 1,
-    url: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/016/246/685/original/466842_01.jpg.jpeg?action=crop&width=950",
-    code: "BV1300-106",
-    user: "dsJosh",
-    id: 1,
-    contact: "ndgns2@gmail.com",
-    price: 1250.0,
-  },
-
-  {
     title: "NikeCraft General Purpose Shoe",
     release: "09/02/2022",
     colors: ["DARK SULFUR", "WHITE-LIGHT", "CREAM"],
@@ -322,20 +307,6 @@ app.locals.inventory = [
   },
 
   {
-    title: "Air Fear of God 1 'The Question'",
-    release: "02-28-2020",
-    colors: ["Multi Color", "Off Noir", "String", "Oatmeal"],
-    brand: "Nike",
-    size: 9,
-    quantity: 1,
-    url: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/033/071/524/original/539575_01.jpg.jpeg?action=crop&width=950",
-    code: "AR4237 902",
-    user: "dsJosh",
-    id: 21,
-    contact: "ndgns2@gmail.com",
-    price: 700.0,
-  },
-  {
     title: "Air Fear Of God 1 'Orange Pulse'",
     release: "06/01/2019",
     colors: ["Orange Pulse"],
@@ -567,6 +538,20 @@ app.locals.inventory = [
     price: 620.0,
   },
   {
+    title: "Air Fear of God 1 'The Question'",
+    release: "02-28-2020",
+    colors: ["Multi Color", "Off Noir", "String", "Oatmeal"],
+    brand: "Nike",
+    size: 9,
+    quantity: 1,
+    url: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/033/071/524/original/539575_01.jpg.jpeg?action=crop&width=950",
+    code: "AR4237 902",
+    user: "dsJosh",
+    id: 21,
+    contact: "ndgns2@gmail.com",
+    price: 700.0,
+  },
+  {
     title: `Air Jordan 7 Retro 'Bordeaux' 2015`,
     release: "07/18/2015",
     colors: ["Black", "Bordeaux-Light", "Graphite-Midnight Fog"],
@@ -607,6 +592,21 @@ app.locals.inventory = [
     id: 28,
     contact: "ndgns2@gmail.com",
     price: 140.0,
+  },
+
+  {
+    title: "Union x Air Jordan 1 Black Toe",
+    release: "11/17/2018",
+    colors: ["WHITE", "BLACK-VARSITY", "RED", "WOLF GREY"],
+    brand: "Jordan",
+    size: 9.5,
+    quantity: 1,
+    url: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/016/246/685/original/466842_01.jpg.jpeg?action=crop&width=950",
+    code: "BV1300-106",
+    user: "dsJosh",
+    id: 1,
+    contact: "ndgns2@gmail.com",
+    price: 1250.0,
   },
 ];
 
