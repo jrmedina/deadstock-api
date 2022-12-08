@@ -544,7 +544,7 @@ app.locals.inventory = [
     brand: "Nike",
     size: 9,
     quantity: 1,
-    url: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/033/071/524/original/539575_01.jpg.jpeg?action=crop&width=950",
+    url: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/080/336/840/original/539575_01.jpg.jpeg?action=crop&width=950",
     code: "AR4237 902",
     user: "dsJosh",
     id: 21,
