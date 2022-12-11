@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(cors());
 
@@ -647,6 +650,39 @@ app.get("/api/inventory", (request, response) => {
     });
   }
   response.send({ data });
+});
+
+app.post("/api/inventory", async (req, res) => {
+  const {
+    title,
+    release,
+    colors,
+    brand,
+    size,
+    quantity,
+    url,
+    code,
+    user,
+    id,
+    price,
+  } = req.body;
+  const newPost = {
+    title: title.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+      letter.toUpperCase()
+    ),
+    release: release || "N/A",
+    colors: Array(colors) || "N/A",
+    brand: brand || "N/A",
+    size: size,
+    quantity: quantity || 1,
+    url: url || "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png",
+    code: code || "N/A",
+    user: user,
+    id: Number(id),
+    price: Number(price).toFixed(2),
+  };
+  app.locals.inventory.push(newPost);
+  res.json(newPost);
 });
 
 app.listen(app.get("port"), () => {
