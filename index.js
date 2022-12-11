@@ -2,10 +2,23 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(cors());
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    parameterLimit: 100000,
+    extended: true,
+  })
+);
+
+
+app.use(
+  bodyParser.json({
+    limit: "50mb",
+  })
+);
+
 
 app.locals.users = [
   { username: "dsUser", password: "shoes", contact: "deadstock@gmail.com" },
@@ -675,7 +688,8 @@ app.post("/api/inventory", async (req, res) => {
     brand: brand || "N/A",
     size: size,
     quantity: quantity || 1,
-    url: url || "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png",
+    url:
+      url,
     code: code || "N/A",
     user: user,
     id: Number(id),
