@@ -12,13 +12,11 @@ app.use(
   })
 );
 
-
 app.use(
   bodyParser.json({
     limit: "50mb",
   })
 );
-
 
 app.locals.users = [
   { username: "dsUser", password: "shoes", contact: "deadstock@gmail.com" },
@@ -228,7 +226,7 @@ app.locals.inventory = [
     release: "08/13/2021",
     colors: ["Blue"],
     brand: "Jordan",
-    size: 10.4,
+    size: 10.5,
     quantity: 1,
     url: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/059/084/576/original/767449_01.jpg.jpeg?action=crop&width=950",
     code: "DM7866 140",
@@ -629,21 +627,6 @@ app.locals.inventory = [
 app.set("port", process.env.PORT || 3001);
 app.locals.title = "deadstock-api";
 
-//request /username returns an array of all matching shoes ex. /deadstockuser1
-app.get("/:username", (request, response) => {
-  console.log(request.params.username);
-  const data = app.locals.inventory.filter(
-    (shoe) => shoe.user === request.params.username
-  );
-  if (!data) {
-    response.status(404).send({
-      error: `Sorry this server is down!`,
-    });
-  }
-  response.send({ data });
-});
-
-//request /users pulls all users
 app.get("/api/users", (request, response) => {
   const data = app.locals.users;
   if (!data) {
@@ -665,6 +648,14 @@ app.get("/api/inventory", (request, response) => {
   response.send({ data });
 });
 
+app.get("/api/inventory/:id", (req, res) => {
+  const found = app.locals.inventory.find(
+    (shoe) => shoe.id === Number(req.params.id)
+  );
+
+  res.json(found);
+});
+
 app.post("/api/inventory", async (req, res) => {
   const {
     title,
@@ -679,24 +670,81 @@ app.post("/api/inventory", async (req, res) => {
     id,
     price,
   } = req.body;
+
   const newPost = {
     title: title.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
       letter.toUpperCase()
     ),
     release: release || "N/A",
-    colors: Array(colors) || "N/A",
+    colors: colors,
     brand: brand || "N/A",
     size: size,
     quantity: quantity || 1,
-    url:
-      url,
+    url: url,
     code: code || "N/A",
     user: user,
-    id: Number(id),
+    id: id,
     price: Number(price).toFixed(2),
   };
   app.locals.inventory.push(newPost);
-  res.json(newPost);
+
+  res.json({
+    added: newPost,
+    updated: app.locals.inventory,
+  });
+});
+
+app.post("/api/:user/closet", async (req, res) => {
+  const { username, password } = req.body;
+
+  const user = app.locals.users.find(
+    (user) => username === user.username && user.password === password
+  );
+  const result = user
+    ? {
+        username: user.username,
+        contact: user.contact,
+        closet: app.locals.inventory.filter(
+          (shoe) => shoe.user === user.username
+        ),
+      }
+    : {
+        error: "Wrong credentials",
+      };
+
+  res.json(result);
+});
+
+app.delete("/api/inventory/:id", async (req, res) => {
+  const found = app.locals.inventory.find(
+    (shoe) => shoe.id === Number(req.params.id)
+  );
+
+  const filteredInventory = app.locals.inventory.filter(
+    (shoe) => shoe.id !== found.id
+  );
+  app.locals.inventory = filteredInventory;
+  res.json({
+    removed: found,
+    updated: app.locals.inventory,
+  });
+});
+
+app.put("/api/inventory/:id", async (req, res) => {
+  const found = app.locals.inventory.find(
+    (shoe) => shoe.id === Number(req.params.id)
+  );
+
+  const filteredInventory = app.locals.inventory.filter(
+    (shoe) => shoe.id !== found.id
+  );
+
+  app.locals.inventory = [...filteredInventory, req.body];
+
+  res.json({
+    removed: found,
+    updated: app.locals.inventory,
+  });
 });
 
 app.listen(app.get("port"), () => {
