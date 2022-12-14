@@ -684,7 +684,7 @@ app.post("/api/inventory", async (req, res) => {
     code: code || "N/A",
     user: user,
     id: id,
-    price: Number(price).toFixed(2),
+    price: price
   };
   app.locals.inventory.push(newPost);
 
