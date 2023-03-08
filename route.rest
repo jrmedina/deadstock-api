@@ -2,4 +2,20 @@ GET http://localhost:3001/users
 
 ###
 
-GET http://localhost:3001/users/josh
+GET http://localhost:3001/users/6409025507f90ce9c1d43861
+
+
+###
+
+POST http://localhost:3001/users
+Content-Type: application/json
+
+{
+    "username": "dsSarah",
+    "password": "dogs",
+    "contact": "sarahlovesdogs@yahoo.com"
+}
+
+###
+
+DELETE http://localhost:3001/users/64091003b23e1850148cf990
