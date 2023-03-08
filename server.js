@@ -1,49 +1,49 @@
-require('dotenv').config()
+// require('dotenv').config()
+
 const express = require("express");
 const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE_URL);
-const db = mongoose.connection;
-db.on("error", (error) => console.error(error));
-db.once("open", () => console.log('====Connected to DATABASE===='));
+// const mongoose = require("mongoose");
+// mongoose.connect(process.env.DATABASE_URL);
+// const db = mongoose.connection;
+// db.on("error", (error) => console.error(error));
+// db.once("open", () => console.log('Connected to database'));
 app.use(express.static("public"));
 app.use(cors());
-app.use(express.json())
-const userRouter = require('./routes/users')
-app.use('/users',userRouter)
-//nodemon to run active server
+// app.use(express.json())
+// const userRouter = require('./routes/users')
+// app.use("/users", userRouter);
 
-// app.use(
-//   bodyParser.urlencoded({
-//     limit: "50mb",
-//     parameterLimit: 100000,
-//     extended: true,
-//   })
-// );
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    parameterLimit: 100000,
+    extended: true,
+  })
+);
 
-// app.use(
-//   bodyParser.json({
-//     limit: "50mb",
-//   })
-// );
+app.use(
+  bodyParser.json({
+    limit: "50mb",
+  })
+);
 
-// app.locals.users = [
-//   { username: "dsUser", password: "shoes", contact: "deadstock@gmail.com" },
+app.locals.users = [
+  { username: "dsUser", password: "shoes", contact: "deadstock@gmail.com" },
 
-//   {
-//     username: "dsChris",
-//     password: "cheese",
-//     contact: "coolguychris@gmail.com",
-//   },
+  {
+    username: "dsChris",
+    password: "cheese",
+    contact: "coolguychris@gmail.com",
+  },
 
-//   { username: "dsJosh", password: "dogs", contact: "ndgns2@gmail.com" },
+  { username: "dsJosh", password: "dogs", contact: "ndgns2@gmail.com" },
 
-//   { username: "dsIsaiah", password: "hummus", contact: "capCinema@gmail.com" },
+  { username: "dsIsaiah", password: "hummus", contact: "capCinema@gmail.com" },
 
-//   { username: "dsMaura", password: "green", contact: "mauraMagic10@gmail.com" },
-// ];
+  { username: "dsMaura", password: "green", contact: "mauraMagic10@gmail.com" },
+];
 app.locals.inventory = [
   {
     title: "NikeCraft General Purpose Shoe",
@@ -638,125 +638,125 @@ app.locals.inventory = [
 app.set("port", process.env.PORT || 3001);
 app.locals.title = "deadstock-api";
 
-// app.get("/api/users", (request, response) => {
-//   const data = app.locals.users;
-//   if (!data) {
-//     response.status(404).send({
-//       error: `Sorry this server is down!`,
-//     });
-//   }
-//   response.send({ data });
-// });
+app.get("/api/users", (request, response) => {
+  const data = app.locals.users;
+  if (!data) {
+    response.status(404).send({
+      error: `Sorry this server is down!`,
+    });
+  }
+  response.send({ data });
+});
 
 // request /inventory pulls all inventory
-// app.get("/api/inventory", (request, response) => {
-//   const data = app.locals.inventory;
-//   if (!data) {
-//     response.status(404).send({
-//       error: `Sorry this server is down!`,
-//     });
-//   }
-//   response.send({ data });
-// });
+app.get("/api/inventory", (request, response) => {
+  const data = app.locals.inventory;
+  if (!data) {
+    response.status(404).send({
+      error: `Sorry this server is down!`,
+    });
+  }
+  response.send({ data });
+});
 
-// app.get("/api/inventory/:id", (req, res) => {
-//   const found = app.locals.inventory.find(
-//     (shoe) => shoe.id === Number(req.params.id)
-//   );
+app.get("/api/inventory/:id", (req, res) => {
+  const found = app.locals.inventory.find(
+    (shoe) => shoe.id === Number(req.params.id)
+  );
 
-//   res.json(found);
-// });
+  res.json(found);
+});
 
-// app.post("/api/inventory", async (req, res) => {
-//   const {
-//     title,
-//     release,
-//     colors,
-//     brand,
-//     size,
-//     quantity,
-//     url,
-//     code,
-//     user,
-//     id,
-//     price,
-//   } = req.body;
+app.post("/api/inventory", async (req, res) => {
+  const {
+    title,
+    release,
+    colors,
+    brand,
+    size,
+    quantity,
+    url,
+    code,
+    user,
+    id,
+    price,
+  } = req.body;
 
-//   const newPost = {
-//     title: title.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-//       letter.toUpperCase()
-//     ),
-//     release: release || "N/A",
-//     colors: colors,
-//     brand: brand || "N/A",
-//     size: size,
-//     quantity: quantity || 1,
-//     url: url,
-//     code: code || "N/A",
-//     user: user,
-//     id: id,
-//     price: price,
-//   };
-//   app.locals.inventory.push(newPost);
+  const newPost = {
+    title: title.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+      letter.toUpperCase()
+    ),
+    release: release || "N/A",
+    colors: colors,
+    brand: brand || "N/A",
+    size: size,
+    quantity: quantity || 1,
+    url: url,
+    code: code || "N/A",
+    user: user,
+    id: id,
+    price: price,
+  };
+  app.locals.inventory.push(newPost);
 
-//   res.json({
-//     added: newPost,
-//     updated: app.locals.inventory,
-//   });
-// });
+  res.json({
+    added: newPost,
+    updated: app.locals.inventory,
+  });
+});
 
-// app.post("/api/:user/closet", async (req, res) => {
-//   const { username, password } = req.body;
+app.post("/api/:user/closet", async (req, res) => {
+  const { username, password } = req.body;
 
-//   const user = app.locals.users.find(
-//     (user) => username === user.username && user.password === password
-//   );
-//   const result = user
-//     ? {
-//         username: user.username,
-//         contact: user.contact,
-//         closet: app.locals.inventory.filter(
-//           (shoe) => shoe.user === user.username
-//         ),
-//       }
-//     : {
-//         error: "Wrong credentials",
-//       };
+  const user = app.locals.users.find(
+    (user) => username === user.username && user.password === password
+  );
+  const result = user
+    ? {
+        username: user.username,
+        contact: user.contact,
+        closet: app.locals.inventory.filter(
+          (shoe) => shoe.user === user.username
+        ),
+      }
+    : {
+        error: "Wrong credentials",
+      };
 
-//   res.json(result);
-// });
+  res.json(result);
+});
 
-// app.delete("/api/inventory/:id", async (req, res) => {
-//   const found = app.locals.inventory.find(
-//     (shoe) => shoe.id === Number(req.params.id)
-//   );
+app.delete("/api/inventory/:id", async (req, res) => {
+  const found = app.locals.inventory.find(
+    (shoe) => shoe.id === Number(req.params.id)
+  );
 
-//   const filteredInventory = app.locals.inventory.filter(
-//     (shoe) => shoe.id !== found.id
-//   );
-//   app.locals.inventory = filteredInventory;
-//   res.json({
-//     removed: found,
-//     updated: app.locals.inventory,
-//   });
-// });
+  const filteredInventory = app.locals.inventory.filter(
+    (shoe) => shoe.id !== found.id
+  );
+  app.locals.inventory = filteredInventory;
+  res.json({
+    removed: found,
+    updated: app.locals.inventory,
+  });
+});
 
-// app.put("/api/inventory/:id", async (req, res) => {
-//   const found = app.locals.inventory.find(
-//     (shoe) => shoe.id === Number(req.params.id)
-//   );
+app.put("/api/inventory/:id", async (req, res) => {
+  const found = app.locals.inventory.find(
+    (shoe) => shoe.id === Number(req.params.id)
+  );
 
-//   const filteredInventory = app.locals.inventory.filter(
-//     (shoe) => shoe.id !== found.id
-//   );
+  const filteredInventory = app.locals.inventory.filter(
+    (shoe) => shoe.id !== found.id
+  );
 
-//   app.locals.inventory = [...filteredInventory, req.body];
+  app.locals.inventory = [...filteredInventory, req.body];
 
-//   res.json({
-//     removed: found,
-//     updated: app.locals.inventory,
-//   });
-// });
+  res.json({
+    removed: found,
+    updated: app.locals.inventory,
+  });
+});
 
 app.listen(app.get("port"), () => {
   console.log(
