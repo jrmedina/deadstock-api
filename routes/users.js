@@ -34,23 +34,36 @@ router.post("/", async (req, res) => {
 });
 
 // UPDATING ONE
-router.patch("/:id", getUser, (req, res) => {});
+router.patch("/:id", getUser, async (req, res) => {
+if(req.body.username != null) {
+    res.user.username = req.body.username;
+}
+if (req.body.password != null) {
+  res.user.password = req.body.password;
+}
+if (req.body.contact != null) {
+  res.user.contact = req.body.contact;
+}
+console.log(req.body);
+
+try {
+    const updatedUser = await res.user.save()
+    res.json(updatedUser)
+} catch (err) {
+    res.status(400).json({message: err.message })
+}
+
+
+});
 
 // DELETE ONE
 router.delete("/:id", getUser, async (req, res) => {
-  
-    try {
-      await res.user.deleteOne();
-          res.json({ message: "Deleted User" });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-//   try {
-//     await res.user.remove()
-//      res.json({ message: "Deleted User" });
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
+  try {
+    await res.user.deleteOne();
+    res.json({ message: "Deleted User" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 // MIDDLEWARE FUNCTIONS

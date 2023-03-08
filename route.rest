@@ -19,3 +19,12 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3001/users/64091003b23e1850148cf990
+
+###
+
+PATCH http://localhost:3001/users/6409052b304fd991b557097e
+Content-Type: application/json
+
+{
+    "username": "dsChanty"
+}
