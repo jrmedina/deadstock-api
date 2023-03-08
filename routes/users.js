@@ -35,25 +35,22 @@ router.post("/", async (req, res) => {
 
 // UPDATING ONE
 router.patch("/:id", getUser, async (req, res) => {
-if(req.body.username != null) {
+  if (req.body.username != null) {
     res.user.username = req.body.username;
-}
-if (req.body.password != null) {
-  res.user.password = req.body.password;
-}
-if (req.body.contact != null) {
-  res.user.contact = req.body.contact;
-}
-console.log(req.body);
+  }
+  if (req.body.password != null) {
+    res.user.password = req.body.password;
+  }
+  if (req.body.contact != null) {
+    res.user.contact = req.body.contact;
+  }
 
-try {
-    const updatedUser = await res.user.save()
-    res.json(updatedUser)
-} catch (err) {
-    res.status(400).json({message: err.message })
-}
-
-
+  try {
+    const updatedUser = await res.user.save();
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 });
 
 // DELETE ONE
