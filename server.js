@@ -9,39 +9,42 @@ mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log('Connected to database'));
-
-
 app.use(express.static("public"));
 app.use(cors());
-app.use(
-  bodyParser.urlencoded({
-    limit: "50mb",
-    parameterLimit: 100000,
-    extended: true,
-  })
-);
+app.use(express.json())
+const userRouter = require('./routes/users')
+app.use('/users',userRouter)
 
-app.use(
-  bodyParser.json({
-    limit: "50mb",
-  })
-);
 
-app.locals.users = [
-  { username: "dsUser", password: "shoes", contact: "deadstock@gmail.com" },
+// app.use(
+//   bodyParser.urlencoded({
+//     limit: "50mb",
+//     parameterLimit: 100000,
+//     extended: true,
+//   })
+// );
 
-  {
-    username: "dsChris",
-    password: "cheese",
-    contact: "coolguychris@gmail.com",
-  },
+// app.use(
+//   bodyParser.json({
+//     limit: "50mb",
+//   })
+// );
 
-  { username: "dsJosh", password: "dogs", contact: "ndgns2@gmail.com" },
+// app.locals.users = [
+//   { username: "dsUser", password: "shoes", contact: "deadstock@gmail.com" },
 
-  { username: "dsIsaiah", password: "hummus", contact: "capCinema@gmail.com" },
+//   {
+//     username: "dsChris",
+//     password: "cheese",
+//     contact: "coolguychris@gmail.com",
+//   },
 
-  { username: "dsMaura", password: "green", contact: "mauraMagic10@gmail.com" },
-];
+//   { username: "dsJosh", password: "dogs", contact: "ndgns2@gmail.com" },
+
+//   { username: "dsIsaiah", password: "hummus", contact: "capCinema@gmail.com" },
+
+//   { username: "dsMaura", password: "green", contact: "mauraMagic10@gmail.com" },
+// ];
 app.locals.inventory = [
   {
     title: "NikeCraft General Purpose Shoe",
