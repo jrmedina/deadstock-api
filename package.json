@@ -1,13 +1,12 @@
 {
   "name": "deadstock-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "engines": {
     "node": "14.x"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +14,8 @@
   "dependencies": {
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "mongoose": "^7.0.1"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,8 @@
     "url": "https://github.com/jrmedina/deadstock-api/issues"
   },
   "homepage": "https://github.com/jrmedina/deadstock-api#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  }
 }
