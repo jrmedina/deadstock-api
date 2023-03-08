@@ -656,6 +656,8 @@ app.get("/api/inventory", (request, response) => {
       error: `Sorry this server is down!`,
     });
   }
+  console.log(data);
+  
   response.send({ data });
 });
 
